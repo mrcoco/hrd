@@ -1,0 +1,64 @@
+EXT fullCalendar untuk yii
+@author nurcahyo al Hidayah <2light.hidayah@gmail.com>
+@Copyright (c) 2012
+Dual licensed under the MIT and GPL licenses, located in (same as fullcalendar js license).
+
+
+
+extract file dan folder ke folder extensions/widgets/calendar
+
+<?php
+
+
+
+///Di controller.
+public function actionAjaxCalendar()
+	{
+		header('content-type:text/plain');
+
+		if (isset($_GET['start']) && isset($_GET['end']))
+		{
+			$data = array();
+			$sql = '
+				select title, creation_date start,seo_title url from listings where unix_timestamp(creation_date) between :start and :end';
+			$command = Yii::app()->db->createCommand($sql);
+			$rows = $command->queryAll(true, array(':start' => $_GET['start'], ':end' => $_GET['end']));
+			foreach ($rows as $row)
+			{
+				$row['allDay'] = false;
+				$row['url'] = CHtml::normalizeUrl(array('/site/event', 'id' => $row['url']));
+				$data[] = $row;
+			}
+			echo CJSON::encode($data);
+		}
+		exit;
+	}
+
+//di view
+<?php
+
+$this->widget('ext.widgets.calendar.EFullCalendar', array(
+	'multipleEvent' => false,//kalo multiple event set true.
+//	'data' => array(
+//		CHtml::normalizeUrl(array('/site/ajaxCalendar')),
+//		CHtml::normalizeUrl(array('/site/ajaxCalendar2'))
+//	),
+	'data'=>CHtml::normalizeUrl(array('/site/ajaxCalendar')),//kalo multiple event=true pakai cara diatas
+	'options' => array(
+		'header' => array(
+			'left' => 'prev,next today',
+			'center' => 'title',
+			'right' => 'prevYear, nextYear',
+		),
+		'editable' => false,
+		'titleFormat' => array(
+			'month' => 'MMMM yyyy',
+			'week' => "MMM d[ yyyy]{ '&#8212;'[ MMM] d yyyy}",
+		),
+	),
+	'onMouseOver' => "js:function(calEvent, jsEvent, view){ $(this).css('border-color', 'red');}",
+	'onMouseOut' => "js: function(calEvent, jsEvent, view) { $(this).css('border-color', 'white');}"
+));
+
+?>
+?>
