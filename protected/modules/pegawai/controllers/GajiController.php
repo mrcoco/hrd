@@ -38,7 +38,9 @@ class GajiController extends Controller {
         $model->pegawai_id = $this->_pegawai->id;
         $model->date = date('Y-m-d');
         $model->jumlah_gaji = $this->_pegawai->jabatan->gaji;
-        $model->jumlah_pajak = ceil(Pajak::model()->getTarifPajak($model->jumlah_gaji));
+        $nptkp = Configuration::getConfigurationByKey('NPTKP');
+        $npkp = $model->jumlah_gaji - $nptkp;      
+        $model->jumlah_pajak = ($npkp > 0) ? ceil(Pajak::getTarifPajak($npkp)) : 0;
         $model->jumlah_tunjangan = $this->_pegawai->getTunjangan();
         $model->jumlah_lembur = ceil($this->_pegawai->getLembur(date('m')));
         $model->jumlah_bonus = $this->_pegawai->getBonus(date('m'));
@@ -194,42 +196,46 @@ class GajiController extends Controller {
     public function actionDownload() {
         $this->layout = '//layouts/column1';
         $bulan = date('m');
-        if (isset($_POST['bulan'])) {
+        $tahun = date('Y');
+        if (isset($_POST['bulan']) && isset($_POST['tahun'])) {
             $bulan = $_POST['bulan'];
+            $tahun = $_POST['tahun'];
 
             $criteria = new CDbCriteria;
             $criteria->compare('pegawai_id', $this->_pegawai->id);
             $criteria->compare('MONTH(date)', $bulan);
+            $criteria->compare('YEAR(date)', $tahun);
             $model = Gaji::model()->find($criteria);
             if ($model !== null) {
-                $html2pdf = Yii::app()->ePdf->HTML2PDF();
-                $html2pdf->WriteHTML($this->renderPartial('slip_pdf', array('model' => $model), true));
-                $html2pdf->Output();
+                $mpdf = Yii::app()->ePdf->mpdf();
+                $mpdf->WriteHTML($this->renderPartial('slip_pdf', array('model' => $model), true));
+                $mpdf->Output();
             }
 
             Yii::app()->user->setFlash('gajiDownloadError', "Slip Gaji tidak ditemukan");
         }
         $this->render('download', array(
             'bulan' => $bulan,
+            'tahun' => $tahun,
         ));
     }
 
     public function actionRekap() {
         $this->layout = '//layouts/column1';
-        $bulan = date('m');
-        $pegawai_id = '';
-        if (isset($_POST['bulan']) && isset($_POST['pegawai_id'])) {
+        $bulan = '';
+        $tahun = '';
+        if (isset($_POST['bulan']) && isset($_POST['tahun'])) {
             $bulan = $_POST['bulan'];
-            $pegawai_id = $_POST['pegawai_id'];
+            $tahun = $_POST['tahun'];
 
             $criteria = new CDbCriteria;
-            $criteria->compare('pegawai_id', $pegawai_id);
             $criteria->compare('MONTH(date)', $bulan);
+            $criteria->compare('YEAR(date)', $tahun);
             $model = Gaji::model()->findAll($criteria);
             if ($model !== null) {
                 $this->layout = '//layouts/print';
 //                $this->render('rekap_pdf', array('model' => $model));
-////                return;
+//                return;
 
                 $mpdf = Yii::app()->ePdf->mpdf();
 //                $mpdf->_setPageSize('A4', 'L');
@@ -240,16 +246,13 @@ class GajiController extends Controller {
 
                 # Outputs ready PDF
                 $mpdf->Output();
-//                $html2pdf = Yii::app()->ePdf->HTML2PDF();
-//                $html2pdf->WriteHTML($this->render('rekap_pdf', array('model' => $model), true));
-//                $html2pdf->Output();
             }
 
             Yii::app()->user->setFlash('gajiDownloadError', "Slip Gaji tidak ditemukan");
         } else
             $this->render('rekap', array(
-                'pegawai_id' => $pegawai_id,
                 'bulan' => $bulan,
+                'tahun' => $tahun,
             ));
     }
 

@@ -62,6 +62,19 @@
                         //                            'image' => Yii::app()->request->baseUrl . '/images/icon-asset.png'
                         ),
                         array(
+                            'label' => 'Laporan',
+                            'visible' => !Yii::app()->user->isGuest,
+                            //                            'image' => Yii::app()->request->baseUrl . '/images/icon-administration.png',
+                            'items' => array(
+                                array(
+                                    'label' => 'Rekap Gaji',
+                                    'url' => array('/pegawai/gaji/rekap'),
+//                                    'image' => Yii::app()->request->baseUrl . '/images/icon-administration.png',
+                                    'visible' => !Yii::app()->user->isGuest,
+                                ),
+                            )
+                        ),
+                        array(
                             'label' => 'Master',
                             'visible' => !Yii::app()->user->isGuest,
                             //                            'image' => Yii::app()->request->baseUrl . '/images/icon-administration.png',
@@ -115,6 +128,11 @@
                                 array(
                                     'label' => 'User',
                                     'url' => array('/pegawai/user/admin'),
+                                    'visible' => !Yii::app()->user->isGuest,
+                                ),
+                                array(
+                                    'label' => 'Configuration',
+                                    'url' => array('/pegawai/configuration/admin'),
                                     'visible' => !Yii::app()->user->isGuest,
                                 ),
                             ),

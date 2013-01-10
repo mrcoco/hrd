@@ -107,7 +107,7 @@ class Pajak extends CActiveRecord {
     }
 
 
-    public function getTarifPajak($pkp) {
+    public static function getTarifPajak($pkp) {
         $tarifpajak = Pajak::model()->findAll();
         if ($tarifpajak != null) {
             foreach ($tarifpajak as $pajak) {

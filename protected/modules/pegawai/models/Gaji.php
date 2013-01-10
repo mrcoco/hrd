@@ -44,7 +44,7 @@ class Gaji extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('jumlah_gaji, jumlah_tunjangan, jumlah_pajak, jumlah_lembur, jumlah_bonus, total_gaji_bersih, date, pegawai_id', 'required'),
+            array('jumlah_gaji, jumlah_tunjangan, jumlah_pajak, total_gaji_bersih, date, pegawai_id', 'required'),
             array('pegawai_id', 'numerical', 'integerOnly' => true),
             array('jumlah_gaji, jumlah_tunjangan, jumlah_pajak, jumlah_lembur, jumlah_bonus, total_gaji_bersih', 'numerical'),
             array('created, updated', 'safe'),
@@ -141,6 +141,37 @@ class Gaji extends CActiveRecord {
             '11' => 'November',
             '12' => 'Desember',
         );
+    }
+
+    public function getYearOptions() {
+        $tahun = date('Y');
+
+        $data = array();
+        for ($i = 0; $i < 5; $i++) {
+            $data[$tahun - $i] = $tahun - $i;
+        }
+        return $data;
+    }
+
+    public static function totalJumlahGaji($provider) {
+        $total = 0;
+        foreach ($provider->data as $item)
+            $total += $item->jumlah_gaji;
+        return $total;
+    }
+
+    public static function totalJumlahTunjangan($provider) {
+        $total = 0;
+        foreach ($provider->data as $item)
+            $total += $item->jumlah_tunjangan;
+        return $total;
+    }
+
+    public static function totalJumlahGajiTunjangan($provider) {
+        $total = 0;
+        foreach ($provider->data as $item)
+            $total += ($item->jumlah_tunjangan + $item->jumlah_gaji);
+        return $total;
     }
 
 }

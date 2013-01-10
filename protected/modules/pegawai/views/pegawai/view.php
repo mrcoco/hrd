@@ -19,8 +19,7 @@ $this->menu = array(
     array('label' => 'Buat Bonus', 'url' => array('bonus/create', 'pid' => $model->id)),
     array('label' => 'Buat Gaji', 'url' => array('gaji/create', 'pid' => $model->id)),
     array('label' => 'Download Slip Gaji', 'url' => array('gaji/download', 'pid' => $model->id)),
-
-        );
+);
 ?>
 
 <h1>View Pegawai #<?php echo $model->id; ?></h1>
@@ -36,10 +35,16 @@ $this->menu = array(
                 'nik',
                 'nama',
                 'alamat',
-                'jenis_kelamin',
-//        'created',
-//        'updated',
-                'jabatan_id',
+                array(
+                    'name' => 'jenis_kelamin',
+                    'type' => 'raw',
+                    'value' => CHtml::encode($model->getJenisKelaminText())
+                ),
+                array(
+                    'name' => 'jabatan_id',
+                    'type' => 'raw',
+                    'value' => CHtml::link(CHtml::encode($model->jabatan->nama), array('jabatan/view', 'id' => $model->jabatan->id))
+                ),
             ),
         ));
         ?>

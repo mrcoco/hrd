@@ -8,13 +8,13 @@
  * @package application.extensions.yii-pdf.EYiiPdf
  * @version 0.3
  */
-class EYiiPdf extends CApplicationComponent
-{
+class EYiiPdf extends CApplicationComponent {
     /**
      * Send the PDF document in browser with a specific name. The plug-in is used if available.
      * The name given by filename is used when one selects the "Save as" option on the link generating the PDF.
      * @var string
      */
+
     const OUTPUT_TO_BROWSER = "I";
 
     /**
@@ -49,33 +49,29 @@ class EYiiPdf extends CApplicationComponent
      * @var HTML2PDF|null
      */
     protected $_HTML2PDF = null;
-
     protected $_importedPaths = array();
 
     /**
      * @param string $library_name
      * @param array $constructorClassArgs
      */
-    protected function initLibrary($library_name, $constructorClassArgs = array())
-    {
-        if( !isset($this->params[$library_name]) || !isset($this->params[$library_name]['librarySourcePath']) )
+    protected function initLibrary($library_name, $constructorClassArgs = array()) {
+        if (!isset($this->params[$library_name]) || !isset($this->params[$library_name]['librarySourcePath']))
             throw new EYiiPdfException(Yii::t('yii-pdf', 'You must set parameters first'), 500);
 
         # Fix for HTML2PDF - class filename is "html2pdf.class.php"
-        if( isset($this->params[$library_name]['classFile']) && !isset(Yii::$classMap[$library_name]) )
+        if (isset($this->params[$library_name]['classFile']) && !isset(Yii::$classMap[$library_name]))
             Yii::$classMap[$library_name] = Yii::getPathOfAlias($this->params[$library_name]['librarySourcePath']) . DIRECTORY_SEPARATOR . $this->params[$library_name]['classFile'];
 
         # Reserve required constants
         $this->initConstants($library_name);
 
         $sourcePath = $this->params[$library_name]['librarySourcePath'];
-        if( !key_exists($sourcePath, $this->_importedPaths) )
+        if (!key_exists($sourcePath, $this->_importedPaths))
             $this->_importedPaths[$sourcePath] = Yii::import($sourcePath, true);
 
         # Merging params arrays (preserving params' indexes)
-        $args = isset($this->params[$library_name]['defaultParams'])
-            ? $constructorClassArgs + array_values($this->params[$library_name]['defaultParams'])
-            : $constructorClassArgs;
+        $args = isset($this->params[$library_name]['defaultParams']) ? $constructorClassArgs + array_values($this->params[$library_name]['defaultParams']) : $constructorClassArgs;
 
         $reflClass = isset($this->params[$library_name]['class']) ? $this->params[$library_name]['class'] : $library_name;
 
@@ -87,32 +83,32 @@ class EYiiPdf extends CApplicationComponent
      * Registering required constants
      * @param string $library_name
      */
-    protected function initConstants($library_name)
-    {
-        if(!isset($this->params[$library_name]['constants']))
+    protected function initConstants($library_name) {
+        if (!isset($this->params[$library_name]['constants']))
             return;
 
-        foreach( (array)$this->params[$library_name]['constants']  as $constant_name => $constant_value )
+        foreach ((array) $this->params[$library_name]['constants'] as $constant_name => $constant_value)
             defined($constant_name) or define($constant_name, $constant_value);
     }
 
     /**
      * @return mpdf
      */
-    public function mpdf()
-    {
-        $this->initLibrary(__FUNCTION__, func_get_args());
+    public function mpdf() {
+        $args = func_get_args();
+        $this->initLibrary(__FUNCTION__, $args);
         return $this->_mpdf;
     }
 
     /**
      * @return HTML2PDF
      */
-    public function HTML2PDF()
-    {
-        $this->initLibrary(__FUNCTION__, func_get_args());
+    public function HTML2PDF() {
+        $args = func_get_args();
+        $this->initLibrary(__FUNCTION__, $args);
         return $this->_HTML2PDF;
     }
+
 }
 
 /**
@@ -121,4 +117,6 @@ class EYiiPdf extends CApplicationComponent
  * @package application.extensions.yii-pdf.EYiiPdf
  * @version 0.1
  */
-class EYiiPdfException extends CException {}
+class EYiiPdfException extends CException {
+    
+}

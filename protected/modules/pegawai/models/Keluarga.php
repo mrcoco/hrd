@@ -97,9 +97,15 @@ class Keluarga extends CActiveRecord {
 
     public function getMaritalStatusOptions() {
         return array(
-            0 => 'Belum',
-            1 => 'Sudah',
+            0 => 'Belum Menikah',
+            1 => 'Sudah Menikah',
         );
+    }
+
+    public function getMaritalStatusText() {
+        $maritalStatusOptions = $this->getMaritalStatusOptions();
+
+        return $maritalStatusOptions[$this->marital_status];
     }
 
     public function behaviors() {
