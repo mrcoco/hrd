@@ -11,7 +11,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List Keluarga', 'url'=>array('admin')),
 	array('label'=>'Buat Keluarga', 'url'=>array('create')),
-	array('label'=>'View Keluarga', 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>'Lihat Keluarga', 'url'=>array('view', 'id'=>$model->id)),
 	array('label'=>'Kelola Keluarga', 'url'=>array('admin')),
 );
 ?>

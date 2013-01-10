@@ -4,7 +4,7 @@
 
 $this->breadcrumbs = array(
     'Pegawais' => array('admin'),
-    $model->id,
+    $model->nama,
 );
 
 $this->menu = array(
@@ -22,7 +22,7 @@ $this->menu = array(
 );
 ?>
 
-<h1>View Pegawai #<?php echo $model->id; ?></h1>
+<h1>Lihat Pegawai <?php echo $model->nama; ?></h1>
 
 <div class="container">
     <div class="span-5"><?php echo CHtml::image(Yii::app()->baseUrl . Yii::app()->params['uploads'] . $model->file_name, $model->file_name, array('style' => 'max-width: 100%;')); ?></div>
@@ -31,7 +31,6 @@ $this->menu = array(
         $this->widget('zii.widgets.CDetailView', array(
             'data' => $model,
             'attributes' => array(
-//        'id',
                 'nik',
                 'nama',
                 'alamat',

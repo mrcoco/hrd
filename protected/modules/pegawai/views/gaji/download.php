@@ -1,3 +1,10 @@
+<?php
+$this->breadcrumbs = array(
+    'Pegawais' => array('admin'),
+    $pegawai->nama => array('pegawai/view', 'id' => $pegawai->id),
+);
+?>
+
 <h1>Download Slip Gaji</h1>
 
 <?php if (Yii::app()->user->hasFlash('gajiDownloadError')): ?>

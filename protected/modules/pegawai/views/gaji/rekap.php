@@ -1,3 +1,9 @@
+<?php
+$this->breadcrumbs = array(
+    'Rekap Gaji',
+);
+?>
+
 <h1>Rekap Gaji  </h1>
 
 <?php if (Yii::app()->user->hasFlash('gajiDownloadError')): ?>

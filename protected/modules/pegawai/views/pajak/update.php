@@ -7,7 +7,7 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
     array('label' => 'Buat Pajak', 'url' => array('create')),
-    array('label' => 'View Pajak', 'url' => array('view', 'id' => $model->id)),
+    array('label' => 'Lihat Pajak', 'url' => array('view', 'id' => $model->id)),
     array('label' => 'Kelola Pajak', 'url' => array('admin')),
 );
 ?>

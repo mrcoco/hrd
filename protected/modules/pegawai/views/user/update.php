@@ -11,7 +11,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List User', 'url'=>array('admin')),
 	array('label'=>'Buat User', 'url'=>array('create')),
-	array('label'=>'View User', 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>'Lihat User', 'url'=>array('view', 'id'=>$model->id)),
 	array('label'=>'Kelola User', 'url'=>array('admin')),
 );
 ?>

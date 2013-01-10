@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
     array('label' => 'Buat Bonus', 'url' => array('create', 'pid' => $model->pegawai->id)),
-    array('label' => 'View Bonus', 'url' => array('view', 'id' => $model->id)),
+    array('label' => 'Lihat Bonus', 'url' => array('view', 'id' => $model->id)),
     array('label' => 'Kelola Bonus', 'url' => array('admin', 'pid' => $model->pegawai->id)),
 );
 ?>

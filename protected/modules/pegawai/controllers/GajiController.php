@@ -217,6 +217,7 @@ class GajiController extends Controller {
         $this->render('download', array(
             'bulan' => $bulan,
             'tahun' => $tahun,
+            'pegawai' => $this->_pegawai,
         ));
     }
 

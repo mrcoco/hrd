@@ -12,7 +12,7 @@ $this->menu = array(
 );
 ?>
 
-<h1>View Pajak #<?php echo $model->nama; ?></h1>
+<h1>Lihat Pajak <?php echo $model->nama; ?></h1>
 
 <?php
 $this->widget('zii.widgets.CDetailView', array(

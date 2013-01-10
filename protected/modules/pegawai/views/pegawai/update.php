@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array('label' => 'List Pegawai', 'url' => array('admin')),
     array('label' => 'Buat Pegawai', 'url' => array('create')),
-    array('label' => 'View Pegawai', 'url' => array('view', 'id' => $model->id)),
+    array('label' => 'Lihat Pegawai', 'url' => array('view', 'id' => $model->id)),
     array('label' => 'Kelola Pegawai', 'url' => array('admin')),
 );
 ?>

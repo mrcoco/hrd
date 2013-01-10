@@ -11,7 +11,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List Pendidikan', 'url'=>array('admin')),
 	array('label'=>'Buat Pendidikan', 'url'=>array('create')),
-	array('label'=>'View Pendidikan', 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>'Lihat Pendidikan', 'url'=>array('view', 'id'=>$model->id)),
 	array('label'=>'Kelola Pendidikan', 'url'=>array('admin')),
 );
 ?>

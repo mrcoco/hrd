@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List PerjalananDinas', 'url'=>array('index')),
 	array('label'=>'Create PerjalananDinas', 'url'=>array('create')),
-	array('label'=>'View PerjalananDinas', 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>'Lihat PerjalananDinas', 'url'=>array('view', 'id'=>$model->id)),
 	array('label'=>'Manage PerjalananDinas', 'url'=>array('admin')),
 );
 ?>
